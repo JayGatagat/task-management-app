@@ -156,6 +156,12 @@ app.post("/tasks", (req, res) => {
   if (!title) {
     return res.status(400).send("Task title is required");
   }
+  if (title.length > 80 || description.length > 200 ) {
+    return res.status(400).send("Task title is too long");
+  }
+  if (description.length > 200) {
+    return res.status(400).send("Task description is too long");
+  }
 
   tasks.push({
     id: nextId++,
