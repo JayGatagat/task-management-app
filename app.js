@@ -22,12 +22,16 @@ const esc = (value) => String(value).replace(/[&<>"']/g, (char) => {
 const commit = (process.env.RENDER_GIT_COMMIT || process.env.GIT_SHA || "local")
   .slice(0, 7);
 
+const validPriority = (priority) => ["Low", "Medium", "High"].includes(priority); 
+
 const validStatus = (status) => ["Pending", "In Progress", "Completed"].includes(status);
 
 function renderPage(filter = "All") {
   const visibleTasks = filter === "All"
     ? tasks
     : tasks.filter((task) => task.status === filter);
+
+    <><span class="badge">${esc(task.status)}</span><span class="badge" style="background:#fef3c7;color:#92400e;">${esc(task.priority)}</span></>     
 
   const cards = visibleTasks.length
     ? visibleTasks.map((task) => `
@@ -162,6 +166,15 @@ app.post("/tasks", (req, res) => {
   if (description.length > 200) {
     return res.status(400).send("Task description is too long");
   }
+
+  const priority = req.body.priority || "Medium";
+ tasks.push({
+    id: nextId++,
+    title,
+    description,
+    status: "Pending",
+    priority
+  });
 
   tasks.push({
     id: nextId++,
