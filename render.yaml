@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: task-management-app
+    runtime: docker
+    healthCheckPath: /health
+    autoDeploy: false
