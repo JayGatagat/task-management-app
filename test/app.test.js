@@ -1,12 +1,12 @@
 const { test, beforeEach } = require("node:test");
 const assert = require("node:assert/strict");
-const { app, tasks } = require("../app");
+const { app, tasks, resetTasks } = require("../app");
 
 let server;
 let base;
 
 beforeEach(() => {
-  tasks.length = 0;
+  resetTasks();
   server = app.listen(0);
   base = `http://127.0.0.1:${server.address().port}`;
 });
