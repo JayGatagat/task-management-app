@@ -199,4 +199,9 @@ app.get("/health", (req, res) => {
   res.json({ status: "ok", commit });
 });
 
-module.exports = { app, tasks };
+function resetTasks() {
+  tasks.length = 0;
+  nextId = 1; 
+}
+
+module.exports = { app, tasks, resetTasks };
