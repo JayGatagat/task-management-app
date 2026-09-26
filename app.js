@@ -31,8 +31,6 @@ function renderPage(filter = "All") {
     ? tasks
     : tasks.filter((task) => task.status === filter);
 
-    <><span class="badge">${esc(task.status)}</span><span class="badge" style="background:#fef3c7;color:#92400e;">${esc(task.priority)}</span></>     
-
   const cards = visibleTasks.length
     ? visibleTasks.map((task) => `
       <article class="task-card ${task.status === "Completed" ? "done" : ""}">
@@ -40,6 +38,7 @@ function renderPage(filter = "All") {
           <h3>${esc(task.title)}</h3>
           <p>${esc(task.description || "No description")}</p>
           <span class="badge">${esc(task.status)}</span>
+          <span class="badge" style="background:#fef3c7; color:#92400e;">${esc(task.priority || "Medium")}</span>
         </div>
         <div class="actions">
           <form method="POST" action="/tasks/${task.id}/status">
@@ -166,6 +165,21 @@ app.post("/tasks", (req, res) => {
   if (description.length > 200) {
     return res.status(400).send("Task description is too long");
   }
+  const priority = validPriority(req.body.priority) ? req.body.priority : "Medium";
+  tasks.push({
+    id: nextId++,
+    title,
+    description,
+    status: "Pending",
+    priority
+  });
+
+  return res.redirect("/");
+});
+
+app.post("/tasks", (req, res) => {
+  const title = String(req.body.title || "").trim();
+  const description = String(req.body.description || "").trim();
 
   const priority = req.body.priority || "Medium";
  tasks.push({
