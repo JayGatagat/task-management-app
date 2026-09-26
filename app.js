@@ -19,7 +19,7 @@ const esc = (value) => String(value).replace(/[&<>"']/g, (char) => {
   return entities[char];
 });
 
-const commit = (process.env.GIT_SHA || process.env.RENDER_GIT_COMMIT || "local")
+const commit = (process.env.RENDER_GIT_COMMIT || process.env.GIT_SHA || "local")
   .slice(0, 7);
 
 const validStatus = (status) => ["Pending", "In Progress", "Completed"].includes(status);
