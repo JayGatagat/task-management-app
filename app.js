@@ -140,7 +140,9 @@ function renderPage(filter = "All") {
     ${cards}
   </section>
 </main>
-<footer>Running commit: ${esc(commit)}</footer>
+<footer>Running commit: ${esc(commit)}
+<p>Made with ❤️ by <a href="https://github.com/jaygatagat" target="_blank">Jay Gatagat</a></p>
+</footer>
 </body>
 </html>`;
 }
